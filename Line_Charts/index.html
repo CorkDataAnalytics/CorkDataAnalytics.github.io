@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.11.1];bootstrap[3.3.1]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.min.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<script src="shared/bootstrap/shim/html5shiv.min.js"></script>
+<script src="shared/bootstrap/shim/respond.min.js"></script>
+  <title>job creation, job destruction, hirings and separations by Nace Code sector</title>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>job creation, job destruction, hirings and separations by Nace Code sector</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <form class="well">
+          <div id="Nace" class="form-group shiny-input-radiogroup shiny-input-container">
+            <label class="control-label" for="Nace">Choose a Nace Code:</label>
+            <div class="shiny-options-group">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace1" value="Business economy excluding activities of holding companies (B to N,-642)" checked="checked"/>
+                  <span>Business economy excluding activities of holding companies (B to N,-642)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace2" value="Industry (B to E)"/>
+                  <span>Industry (B to E)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace3" value="Business economy services excluding activities of holding companies (G to N,-642)"/>
+                  <span>Business economy services excluding activities of holding companies (G to N,-642)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace4" value="Mining and quarrying (B)"/>
+                  <span>Mining and quarrying (B)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace5" value="Manufacturing (C)"/>
+                  <span>Manufacturing (C)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace6" value="Electricity, gas, steam and air conditioning supply (D)"/>
+                  <span>Electricity, gas, steam and air conditioning supply (D)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace7" value="Water supply, sewerage, waste management and remediation activities (E)"/>
+                  <span>Water supply, sewerage, waste management and remediation activities (E)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace8" value="Construction (F)"/>
+                  <span>Construction (F)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace9" value="Wholesale and retail trade, repair of motor vehicles and motorcycles (G)"/>
+                  <span>Wholesale and retail trade, repair of motor vehicles and motorcycles (G)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace10" value="Transportation and storage (H)"/>
+                  <span>Transportation and storage (H)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace11" value="Accommodation and food service activities (I)"/>
+                  <span>Accommodation and food service activities (I)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace12" value="Information and communication (J)"/>
+                  <span>Information and communication (J)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace13" value="Real estate activities (L)"/>
+                  <span>Real estate activities (L)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace14" value="Professional, scientific and technical activities (M)"/>
+                  <span>Professional, scientific and technical activities (M)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace15" value="Administrative and support service activities (N)"/>
+                  <span>Administrative and support service activities (N)</span>
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="Nace" id="Nace16" value="Financial and insurance activities excluding activities of holding companies (K-642)"/>
+                  <span>Financial and insurance activities excluding activities of holding companies (K-642)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group shiny-input-container">
+            <div class="checkbox">
+              <label>
+                <input id="pageable" type="checkbox"/>
+                <span>Pageable</span>
+              </label>
+            </div>
+          </div>
+          <div data-display-if="input.pageable==true">
+            <div class="form-group shiny-input-container">
+              <label for="pagesize">values per page</label>
+              <input id="pagesize" type="number" class="form-control" value="5"/>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-8">
+        <div id="churn" class="shiny-html-output"></div>
+        <div id="view" class="shiny-html-output"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
