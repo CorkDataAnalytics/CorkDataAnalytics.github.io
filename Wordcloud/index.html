@@ -138,7 +138,7 @@ file.remove(dir(tempdir(), full.name=T)) # remove files</code></pre>
 <p>However for a more formal approach we can do this (because d is ordered by frequency in decreasing values- see the code above):</p>
 <pre class="r"><code>d$word[1:3]
 [1] &quot;statistical&quot; &quot;data&quot;        &quot;strategy&quot;</code></pre>
-<p>We should also remove the digits and unnecessary puntuation</p>
+<p>We should also remove the digits and unnecessary punctuation</p>
 <pre class="r"><code>txt &lt;- removeWords(txt, c(&quot;\\f&quot;, stopwords()))
 txt &lt;- removeWords(txt, c(&quot;statistical&quot;, &quot;data&quot;,&quot;strategy&quot;, stopwords()))
 #txt&lt;-gsub(&quot;\t\n\r\v\f&quot;, &quot;&quot;, txt, fixed = TRUE)
