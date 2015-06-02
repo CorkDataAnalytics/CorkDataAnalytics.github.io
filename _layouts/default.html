@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 
-
-
-<html>
 	<head>
-		<title></title>
+		<title>{{ page.title }}</title>
 		<!-- link to main stylesheet -->
 		<link rel="stylesheet" type="text/css" href="http://corkdataanalytics.github.io/main.css">
 
 
 	</head>
-	<body>
-		<nav>
+	
+
+		
+				<body>
+			<nav>
     		<ul>
         		<li><a href="/Sentiment_Analysis">Home</a></li>
         		<li><a href="/Line_Charts">Line Charts</a></li>
@@ -21,11 +21,10 @@
         		<li><a href="/other">Other CSO data</a></li>
     		</ul>
 		</nav>
-
-    		<div class="blurb">
-        		<h1>CSO Data Explorer</h1>
-				<p>Here is an analytical look at CSO data, starting with <em>Job Churn</em> More Data Sets to come</p>
-    		</div><!-- /.blurb -->
+			<div class="container">
+			
+			{{ content }}
+	 		</div><!-- /.blurb -->
 		</div><!-- /.container -->
 		<footer>
     		<ul>
@@ -33,5 +32,6 @@
         	
 			</ul>
 		</footer>
-	</body>
-</html>
+	</body>		
+
+	</html>
