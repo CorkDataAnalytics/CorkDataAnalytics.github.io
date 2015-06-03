@@ -1,2 +1,3 @@
-	name: CSO Data Explorer
-	markdown: kramdown
+name: CSO Data Explorer
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title
