@@ -1,7 +1,0 @@
----
-layout: default
-title: Job Churn Analysis
----
-
-
-  <iframe src="https://csostatbankexplorer.shinyapps.io/googleVis/" style="border: none; width: 1500px; height: 1500px"></iframe>
