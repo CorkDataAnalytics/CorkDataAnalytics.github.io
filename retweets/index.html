@@ -44,7 +44,7 @@ layout: default
 <p>Terms grouped near to each other are more frequently found together.</p>
 <p>In dendogram we can see that CSOIreland is the most frequent term and its nearest neighbours in terms of frequency are 'may' and 'unemployemnt'. </p>
 
-<p>Now we can build a graph that represents the number of co-occurrences of two terms/words, i.e. a term and itself or another term.</p>
+<p>Now we can build a network graph that represents the number of co-occurrences of two terms/words, i.e. a term and itself or another term.</p>
 
 <p>This is done by taking the data.frame used to construct the dendogram. This data.frame is converted to a matrix. As the original data.frame has 37 rows and 80 observations a square version of this data.frame (first 30 rows and first 30 observations) is used to make the matrix. This matrix is then converted into a Boolean matrix (i.e. frequencies of 1 and 0). The Boolean matrix is then converted into an Adjacency matrix which gives the co-occurence frequencies for any given word ( a word will co-occur with itself as often as it occurs, e.g. if it appears 37 times then it has co-occurred 37 times) or pair of words. The adjacency matrix is then used to plot the graph below. However, as the adjacency matrix is smaller than the original data.frame we can expect the results to be different. </p>
 
