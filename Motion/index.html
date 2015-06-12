@@ -22,23 +22,6 @@ strDates &lt;- date1
 dates &lt;- as.Date(strDates, &quot;%Y&quot;) 
 date=as.numeric(format(dates,&quot;%Y&quot;))
 RBB$Year= date
-require(&quot;googleVis&quot;)
-require(&quot;pxR&quot;)
-require(&quot;reshape2&quot;) 
-RBA01.px&lt;-read.px(&quot;http://www.cso.ie/px/pxeirestat/Database/eirestat/Response%20Burden%20Barometer/RBA01.px&quot;)
-RBA01.df&lt;-as.data.frame(RBA01.px)
-
-RBA01 = dcast(RBA01.df, Year + Survey ~ Statistic, value.var=&quot;value&quot;, fun.aggregate=sum)
-
-RBA01[,5]&lt;-(RBA01[4]/RBA01[3])
-RBB&lt;-cbind(RBA01[1:4],RBA01[,5])
-names(RBB) &lt;- c(&quot;Year&quot;,&quot;Survey&quot;,&quot;Issued&quot;, &quot;Returned&quot;, &quot;Response.Rate&quot;) 
-date1 &lt;- as.character(RBB$Year)
-
-strDates &lt;- date1
-dates &lt;- as.Date(strDates, &quot;%Y&quot;) 
-date=as.numeric(format(dates,&quot;%Y&quot;))
-RBB$Year= date
 
 chart=gvisMotionChart(RBB, 
                 idvar= &quot;Survey&quot;, 
