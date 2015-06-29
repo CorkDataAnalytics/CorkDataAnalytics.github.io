@@ -1,5 +1,4 @@
 ---
-title: "Untitled"
 runtime: shiny
 output: html_document
 ---
