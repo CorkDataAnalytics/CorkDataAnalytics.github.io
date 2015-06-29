@@ -1,0 +1,197 @@
+---
+runtime: shiny
+output: html_document
+---
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+library("googleVis")
+library("ISOcodes")
+library("sqldf")
+data("ISO_3166_2")
+
+ISO_3166_2_IE <- subset(ISO_3166_2, Country %in% "IE")
+
+#CD102<-read.px("http://www.cso.ie/px/pxeirestat/Database/eirestat/Profile%201%20-%20Geography/CD102.px")
+#CD102df<-as.data.frame(CD102)
+
+#write.csv(CD102df,"~/CD102df.csv")
+#setwd('C:/Users/mlol1/Documents/census/')
+CD102df <- read.csv("CD102df.csv")
+CD102df<-as.data.frame(CD102df)
+state<-subset( CD102df,  CD102df$Statistic == "Population (Number)" )
+nation<-subset( state,  state$Province.or.County == "State" )
+#adm<-NULL
+#adm <- getData('GADM', country='IRL', level=1)
+
+#adm@data = data.frame(adm@data, dat[match(adm@data$NAME_1, dat$Province.or.County),])
+
+#levels(CD102df$Province.or.County)
+
+selected<-c( "Carlow"       ,    "Dublin"    ,       "Kildare",          "Kilkenny"  ,       "Laois" ,          
+             "Longford"     ,    "Louth"      ,      "Meath"   ,         "Offaly"    ,       "Westmeath"   ,
+             "Wexford"       ,   "Wicklow"     ,    "Clare"    ,        "Cork"       ,      "Kerry"        ,
+             "Limerick"      ,   "North Tipperary" , "South Tipperary", 
+             "Waterford"     ,  "Galway"     ,      "Leitrim"      ,    "Mayo"       ,
+             "Roscommon"   ,     "Sligo"     ,      
+             "Cavan"       ,     "Donegal"   ,       "Monaghan")
+
+counties<- CD102df[CD102df$Province.or.County %in% selected,]
+lf <- c("North Tipperary" ,"South Tipperary")
+levels( counties$Province.or.County)[levels( counties$Province.or.County) %in% lf] <- "Tipperary"
+
+#lf <- "Laois"
+#levels( counties$Province.or.County)[levels( counties$Province.or.County) %in% lf] <- "Laoighis"
+counties<- CD102df[CD102df$Province.or.County %in% selected,]
+selected2<-c( "Carlow"       ,    "Dublin"    ,       "Kildare",          "Kilkenny"  ,       "Laois" ,          
+              "Longford"     ,    "Louth"      ,      "Meath"   ,         "Offaly"    ,       "Westmeath"   ,
+              "Wexford"       ,   "Wicklow"     ,    "Clare"    ,        "Cork"       ,      "Kerry"        ,
+              "Limerick"      ,   "Tipperary", 
+              "Waterford"     ,  "Galway"     ,      "Leitrim"      ,    "Mayo"       ,
+              "Roscommon"   ,     "Sligo"     ,      
+              "Cavan"       ,     "Donegal"   ,       "Monaghan")
+ISO<- ISO_3166_2_IE[ISO_3166_2_IE$Name %in% selected2,]
+#adm$code = ISO$Code
+counties<-as.data.frame(counties)
+stats<-subset( counties,  counties$Statistic == "Actual Change Since Previous Census (Number)" )
+stats<-as.data.frame(stats)
+years<-c(1926, 1936 ,1946 ,1951, 1956, 1961 ,1966 ,1971, 1979 ,1981 ,
+                 1986 ,1991 ,1996, 2002 ,2006 ,2011)
+provinces<- c("Ulster (part of)","Leinster","Munster","Connacht")
+prov<- CD102df[CD102df$Province.or.County %in% provinces,]
+pop<-NULL
+pop<-subset( prov,  prov$Statistic == "Population (Number)" )
+pop<-as.data.frame(pop)
+
+percent<-subset( counties,  counties$Statistic == "Population Change Since Previous Census (%)" )
+
+percent<-as.data.frame(percent)
+
+```
+
+
+```{r, echo=FALSE,message=FALSE,warning=FALSE}
+shinyApp(
+  
+  ui = fluidPage(
+  headerPanel("Changes in Population by Census Year"),
+              sidebarPanel(
+  selectInput(
+    inputId =  "anno1", 
+    label = "Select year:", 
+    choices = years
+  )),
+    
+    mainPanel(
+      h3(textOutput("text")),
+      htmlOutput("pie"),
+      h3(textOutput("year")),
+      htmlOutput("map"),
+      h3(textOutput("perc")),
+      htmlOutput("choro"))
+      
+  
+),
+  
+  server = function(input, output) {
+
+    myYear <- reactive({
+      input$anno1
+    })   
+    
+    output$text <- renderText({
+      population<-subset( nation,  nation$CensusYear == myYear() )
+      paste("The population of the Republic of Ireland in",myYear(),"was",
+            prettyNum(population$value,big.mark=",", preserve.width="none")
+            ,". This number was apportioned to the provinces in the following way.",sep=" " )
+    })
+    
+    output$pie<- renderGvis({
+      
+      myYear<-as.numeric(myYear())
+      year<-subset( pop,pop$CensusYear == myYear)
+      year<-as.data.frame(year)
+      dat<-aggregate(value ~Province.or.County +Statistic, year,sum) 
+      dat<-as.data.frame(dat)
+      #make sure that the two datasets are joined by county name
+      #change the Province.or.County to County so that the variable name will not be misread by sql
+      #names(dat)[names(dat) == 'Province.or.County'] <- 'County'  
+      piedat<-cbind(dat[1],dat[3])
+    Pie <- gvisPieChart(piedat, 
+                        numvar="value",
+                        
+                        options=list(width=800, height=350))
+
+   return(Pie)
+    })
+
+    output$year <- renderText({
+      paste("Numeric change by County when compared to the previous census")
+    })
+    
+    output$map <- renderGvis({
+
+      myYear<-as.numeric(myYear())
+      year<-subset( stats,stats$CensusYear == myYear)
+      year<-as.data.frame(year)
+      dat<-aggregate(value ~Province.or.County +Statistic, year,sum) 
+      #dat<-as.data.frame(dat)
+      #make sure that the two datasets are joined by county name
+      #change the Province.or.County to County so that the variable name will not be misread by sql
+      names(dat)[names(dat) == 'Province.or.County'] <- 'County'  
+      newdat<-sqldf("select * from ISO join dat where County = Name ") 
+      newdat<-as.data.frame(newdat) 
+     Geo <- gvisGeoMap(newdat, 
+                              locationvar="Code", 
+                              numvar="value", 
+                              hovervar="Statistic", 
+                              options=list(height=350, width=500,
+                                           region="IE", 
+                                           dataMode="markers", 
+                                           colorAxis="{colors:['#FFFFFF', '#0000FF']}",
+                                           backgroundColor="blue"
+                                           #greenFrom=min(newdat$value),
+                                            #            greenTo=0, yellowFrom=0, 
+                                           #yellowTo=max(newdat$value),
+                                                        )) 
+      return(Geo)
+    })
+    
+    output$choro <- renderGvis({
+      
+      myYear<-as.numeric(myYear())
+      year<-subset(percent,percent$CensusYear == myYear)
+      year<-as.data.frame(year)
+      lf <- c("North Tipperary" ,"South Tipperary")
+      levels(year$Province.or.County)[levels( year$Province.or.County) %in% lf] <- "Tipperary"
+      
+      dat<-aggregate(value ~Province.or.County +Statistic, year,sum) 
+      dat<-as.data.frame(dat)
+      #make sure that the two datasets are joined by county name
+      #change the Province.or.County to County so that the variable name will not be misread by sql
+      names(dat)[names(dat) == 'Province.or.County'] <- 'County'  
+      newdat<-sqldf("select * from ISO join dat where County = Name ") 
+      newdat$code = ISO$Code
+      newdat<-as.data.frame(newdat) 
+    geoChartIE <- list(height=350, width=500,region="IE", 
+                       resolution="provinces",
+                       legend="{numberFormat:'#,###.00'}",
+                       colorAxis="{colors:['#FFFFFF', '#0000FF']}"
+                       #,backgroundColor="blue"
+                       )
+    return(
+      gvisGeoChart(newdat, locationvar = "code", 
+                   colorvar = "value",
+                   options=geoChartIE)
+    )
+    })
+    
+    output$perc <- renderText({
+      paste("Percentage change (%) by County when compared to the previous census")
+    })
+    
+      
+  },
+ options = list(height = 1100,width="100%")
+)
+```
+
