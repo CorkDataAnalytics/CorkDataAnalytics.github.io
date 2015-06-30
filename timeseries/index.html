@@ -22,7 +22,7 @@ library(&quot;pxR&quot;)
 library(&quot;reshape&quot;)
 library(&quot;sqldf&quot;)
 
-#read in the following px file: LRM31 from the CSO Statbank: http://www.cso.ie/px/pxeirestat/database/eirestat/Job%20Churn/Job%20Churn_statbank.a
+#read in the following px file: LRM31 from the CSO Statbank.
 LRM31.px&lt;- read.px(&quot;http://www.cso.ie/px/pxeirestat/Database/eirestat/Live%20Register%20Detailed%20Flow%20Analysis/LRM31.px&quot;)
 #Convert this px file into a data frame
 LRM31df&lt;-as.data.frame(LRM31.px)
@@ -68,7 +68,7 @@ g&lt;-cbind(as.data.frame(ourdata),as.data.frame(f))
 #ignore the NAs and using the aggregate function get the mean of the &quot;Leavers..Persons.&quot; values for each quarter, i.e the months in each quarter are added together and divided by the corresponding number of months which there is a value for. So in a quarter with 3 months and one NA, the values for two months are added together and divided by two to get the mean.
 live&lt;-dcast(g, quarter ~ Occupation.Held, value.var=&quot;Leavers..Persons.&quot;, fun.aggregate=mean,na.rm=TRUE)
 
-#Read in the planning permissions data from the CSO statbank
+#Read in the planning permissions data from the CSO statbank.
 BHQ02.px&lt;- read.px(&quot;http://www.cso.ie/px/pxeirestat/Database/eirestat/Planning%20Permissions/BHQ02.px&quot;)
 #Convert this px file into a data frame
 BHQ02df&lt;-as.data.frame(BHQ02.px)
