@@ -631,10 +631,13 @@ durbinWatsonTest(lm2)</code></pre>
 <p>Use transformed Variables that remove the (estimated) autocorrelation parameter (Cochrane-Orcutt and Hildreth-Lu Procedures)</p>
 <p>Use First Differences, where the first difference of Y at period t is equal to Yt-Yt-1</p>
 <p>Use a more sophisticated forecasting model such as exponential smoothing or ARIMA may be appropriate</p>
-<p>Estimated Generalized Least Squares</p>
+<p>Use Estimated Generalized Least Squares</p>
 </div>
 <div id="so-it-looks-like-we-cant-trust-the-results-from-the-analysis-above-the-regression-model-is-likely-to-be-seriously-biased-or-misleading.-but-although-we-know-that-we-cant-use-the-model-lets-see-what-emerges-from-the-diagnostic-tests-below." class="section level1">
-<h1>So it looks like we can’t trust the results from the analysis above: the regression model is likely to be seriously biased or misleading. But, although we know that we can’t use the model, let’s see what emerges from the diagnostic tests below.</h1>
+<h1>So it looks like we can’t trust the results from the analysis above: the regression model is likely to be seriously biased or misleading.</h1>
+
+<h1> But, although we know that we can’t use the model, let’s see what emerges from the diagnostic tests below.</h1>
+
 <pre class="r"><code>layout(matrix(1:4,2,2))
  with(newdata, scatter.smooth(newdata$Multi_development_houses,newdata$livereg, lpars= list(col = &quot;red&quot;, lwd = 3, lty = 3)))
  title(&quot;Scatter Smooth plot&quot;)
@@ -653,12 +656,12 @@ shapiro.test(residuals(lm2))</code></pre>
 ## W = 0.9701, p-value = 0.8407</code></pre>
 <p>The Shapiro-Wilk normality test shows that the p-value is greater than 5%, so we can conclude that the residuals follow a normal distribution and thus sum to zero. This is corroborated by the histogram which suggests a normal relationship.</p>
 <p>The small number of observations is noticeable in these plots.</p>
-<p>The scatter smooth suggests a non-linear negative relationship that is greatly influenced into becoming postive by the outlier. The variance appears to be constant but systematic.</p>
+<p>The scatter smooth suggests a non-linear negative relationship that is greatly influenced into becoming postive by the outlier. The variance appears to be constant but systematic- so the errors are not independent.</p>
 <p>In the plot of residuals vs fitted values the residuals do not bounce randomly around the 0 line. Infact there is evidence that certain values appear to be grouped around certain points in time, i.e. cyclicality. This suggests that the assumption that the relationship is linear is not strong.</p>
-<p>However, the residuals roughly form a “horizontal band” around the 0 line. This suggests that the variances of the error terms are equal.</p>
+<p>However, the residuals roughly form a “horizontal band” around the 0 line. This suggests that the variances of the error terms are equal,even if they are not independent.</p>
 <p>One residual does “stand out” from the basic random pattern of residuals. This suggests that there is an outlier and that it is likey to have high leverage.</p>
-<p>In the normal Quantile-Quantile plot, there are slight departures above and below the reference line, however on balance the residuals appear to follow a normal.</p>
-<p>We can conclude that the relationship is not linear and the errors are not randomly distributed. So we can’t use this model.</p>
+<p>In the normal Quantile-Quantile plot, there are slight departures above and below the reference line, however on balance the residuals appear to follow a normal distribution.</p>
+<p>We can conclude that the relationship is not linear and the errors are not independent and are not randomly distributed. So we can’t use this model.</p>
 </div>
 <div id="now-just-for-information-purposes-again-lets-see-how-we-identify-the-outlier" class="section level1">
 <h1>Now, just for information purposes again, let’s see how we identify the outlier:</h1>
