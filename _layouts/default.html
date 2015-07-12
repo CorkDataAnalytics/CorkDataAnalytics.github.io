@@ -7,10 +7,8 @@
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
   ga('create', 'UA-60235588-1', 'auto');
   ga('send', 'pageview');
-
 </script>
 
 
@@ -26,81 +24,25 @@
 
 		
 				<body>
-<style type="text/css">
-/* Derived from http://www.devinrolsen.com/pure-css-horizontal-menu/ */
-
-#pagebody { position: inherit !important; width: 100%; } /* DO NOT EDIT */
-#pagebody-inner { position: inherit !important; width: 100%; } /* DO NOT EDIT */
-
-#alpha, #beta, #gamma, #delta {
-    display: inline; /* DO NOT EDIT */
-    position: inherit !important; /* DO NOT EDIT */
-    float: left; /* DO NOT EDIT */
-    min-height: 1px; /* DO NOT EDIT */
-}
-
-#centernav {
-  width: 1500px; /* if you want your nav centered, set this to the width of your container, if you don't want it centered, change this number to 100% */
-  margin-left: auto ;
-  margin-right: auto ;
-}
-
-#dropnav 
-{height:25px; background:#999;} /* Changes the height and bg color of the main menu */
-
-#dropnav ul
-{margin:0px; padding:0px;}
-
-#dropnav ul li
-{display:inline; float:left; list-style:none; margin-left:15px; position:relative; height:100px; width: 150px;} /* only edit the last 2 items - sets the width of the main menu */
-
-#dropnav li a
-{color:#FFF; text-decoration:none;} /* Changes the link color of items on the main menu */
-
-#dropnav li a:hover
-{color:#900; text-decoration:none;}/* Changes the hover color of items on the main menu */
-
-#dropnav li ul
-{margin:0px; padding:0px; display:none; position:absolute; left:0px; z-index: 99; top:25px; background-color:#CCC;} /* Only edit the last 2 items - set the top margin and background color of the submenus */
-
-#dropnav li:hover ul
-{display:block; width:150px;} /* sets the width of the submenus */
-
-#dropnav li li
-{list-style:none; display:list-item;} /* DO NOT EDIT */
-
-#dropnav li li a
-{color:#000; text-decoration:none;} /* Changes the link color of items in the submenu */
-
-#dropnav li li a:hover
-{color:#900; text-decoration:none;} /* Changes the hover color of items in the submenu */
-
-li#main  {padding-top: 2px;} /* Sets the padding of items in the main menu */
-
-</style>
-
-    <div id="centernav">
-    <div id="dropnav">
+			<nav>
     		<ul>
         		<li><a href="/">Home</a></li>
         		<li><a href="/retweets">Retweet Analysis</a></li>
         		<li><a href="/SentimentAnalysis">Sentiment Analysis</a></li>
-
-<li id="Wordcloud">
-            <a href="#">Wordcloud</a>
-
-                <ul id="subnav">
-                      <li><a href="/Wordcloud">Wordcloud app</a></li>
-                </ul>            
-            </li>    
-                    
+        		<li><a href="/Wordcloud">Wordcloud</a></li>
                         <li><a href="/Motion">Motion Chart</a></li>
                         <li><a href="/timeseries">Time Series Analysis</a></li>
                         <li><a href="/JobChurnAnalysis">Job Churn App</a></li>
         		<li><a href="/pyramids">Pyramid App</a></li>
         		<li><a href="/census">Census with googleVis</a></li>
-    		</ul>    </div>
-</div>
+    		</ul>
+		</nav>
+			<div class="container">
+			
+			{{ content }}
+	 		</div><!-- /.blurb -->
+
+
 	</body>		
 		<footer>
 
