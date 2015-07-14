@@ -4,7 +4,7 @@ title: More Apps
 ---
 
 <iframe src="https://csostatbankexplorer.shinyapps.io/wordclouds" style="border: none; width: 1500px; height: 700px"></iframe>
-<h3> Here is the code for this app. idea based on code from http://shiny.rstudio.com/gallery/word-cloud.html </h3>
+<h2> Here is the code for this app. The idea is based on code from http://shiny.rstudio.com/gallery/word-cloud.html </h2>
 <div>
 <pre class="r"><code>
 library(tm)
@@ -47,7 +47,7 @@ library(shiny)
 
 
 books <- list("RÃ¡iteas StraitÃ©ise - TuarascÃ¡il ar Dhul chun cinn 2013"= "dulchuncinn" ,
-"Statement of Strategy - Progress Report 2013"="progress")
+"Statement of Strategy - Progress Report 2013"                           ="progress")
 
 # Using "memoise" to automatically cache the results
 getTermMatrix <- memoise(function(book) {
@@ -58,7 +58,7 @@ getTermMatrix <- memoise(function(book) {
 
   if (!(book %in% books))
     stop("Unknown book")
-  text <- read.csv(sprintf("~/wordclouds/%s.csv", book))
+  text <- read.csv(sprintf("~/%s.csv", book))
   
   myCorpus = Corpus(VectorSource(text))
   myCorpus = tm_map(myCorpus, content_transformer(tolower))
