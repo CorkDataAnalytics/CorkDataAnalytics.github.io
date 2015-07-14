@@ -4,7 +4,7 @@ title: More Apps
 ---
 
 <iframe src="https://csostatbankexplorer.shinyapps.io/wordclouds" style="border: none; width: 1500px; height: 1500px"></iframe>
-
+<div>
 <pre class="r"><code>
   library(tm)
 library(wordcloud)
@@ -74,9 +74,7 @@ getTermMatrix <- memoise(function(book) {
   
   sort(rowSums(m), decreasing = TRUE)
 })
-```
 
-```{r, echo=FALSE,out.height=800,out.width=800}
 ## app.R
 server <- function(input, output, session) {
   # Define a reactive expression for the document term matrix
@@ -129,4 +127,6 @@ shinyUI(fluidPage(
 ))
 
 shinyApp(ui = ui, server = server)
-```
+
+</code></pre>
+</div>
