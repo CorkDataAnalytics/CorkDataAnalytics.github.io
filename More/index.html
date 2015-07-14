@@ -4,3 +4,129 @@ title: More Apps
 ---
 
 <iframe src="https://csostatbankexplorer.shinyapps.io/wordclouds" style="border: none; width: 1500px; height: 1500px"></iframe>
+
+<pre class="r"><code>
+  library(tm)
+library(wordcloud)
+library(memoise)
+library(shiny)
+
+#url <- "http://www.cso.ie/en/media/csoie/releasespublications/documents/corporatepublications/AnnualReport2013asGaeilge.pdf"
+#dest <- tempfile(fileext = ".pdf")
+#download.file(url, dest, mode = "wb")
+# set path to pdftotxt.exe and convert pdf to text
+#exe <- "C:\\Program Files (x86)\\xpdfbin-win-3.04\\bin64\\pdftotext.exe"
+#system(paste("\"", exe, "\" \"", dest, "\"", sep = ""), wait = F)
+# get txt-file name and open it  
+#filetxt <- sub(".pdf", ".txt", dest)
+#shell.exec(filetxt)
+# do something with it, i.e. a simple word cloud 
+#txt <- readLines(filetxt) # don't mind warning..
+#txt <- tolower(txt)
+#txt <- removeWords(txt, c("\\f", stopwords()))
+#dulchuncinn <- tolower(txt)
+#write.csv(dulchuncinn, "~/dulchuncinn.csv")
+
+
+#url <- "http://www.cso.ie/en/media/csoie/releasespublications/documents/corporatepublications/AnnualReport2013.pdf"
+#dest <- tempfile(fileext = ".pdf")
+#download.file(url, dest, mode = "wb")
+# set path to pdftotxt.exe and convert pdf to text
+#exe <- "C:\\Program Files (x86)\\xpdfbin-win-3.04\\bin64\\pdftotext.exe"
+#system(paste("\"", exe, "\" \"", dest, "\"", sep = ""), wait = F)
+# get txt-file name and open it  
+#filetxt <- sub(".pdf", ".txt", dest)
+#shell.exec(filetxt)
+# do something with it, i.e. a simple word cloud 
+#txt <- readLines(filetxt) # don't mind warning..
+#txt <- tolower(txt)
+#txt <- removeWords(txt, c("\\f", stopwords()))
+#progress<- tolower(txt)
+#write.csv(progress, "~/progress.csv")
+
+
+books <- list("RÃ¡iteas StraitÃ©ise - TuarascÃ¡il ar Dhul chun cinn 2013"= "dulchuncinn" ,
+"Statement of Strategy - Progress Report 2013"="progress")
+
+# Using "memoise" to automatically cache the results
+getTermMatrix <- memoise(function(book) {
+  # Careful not to let just any name slip in here; a
+  # malicious user could manipulate this value.
+  
+
+
+  if (!(book %in% books))
+    stop("Unknown book")
+  text <- read.csv(sprintf("~/wordclouds/%s.csv", book))
+  
+  myCorpus = Corpus(VectorSource(text))
+  myCorpus = tm_map(myCorpus, content_transformer(tolower))
+  myCorpus = tm_map(myCorpus, removePunctuation)
+  myCorpus = tm_map(myCorpus, removeNumbers)
+  myCorpus = tm_map(myCorpus, removeWords,
+                    c(stopwords("SMART"), "chun", "and", "agus", "the", "will", "wwwcsoie", "ext"))
+  
+
+  myDTM = TermDocumentMatrix(myCorpus,
+                             control = list(minWordLength = 1))
+  
+  m = as.matrix(myDTM)
+  
+  sort(rowSums(m), decreasing = TRUE)
+})
+```
+
+```{r, echo=FALSE,out.height=800,out.width=800}
+## app.R
+server <- function(input, output, session) {
+  # Define a reactive expression for the document term matrix
+  terms <- reactive({
+    # Change when the "update" button is pressed...
+    input$update
+    # ...but not for anything else
+    isolate({
+
+        getTermMatrix(input$selection)
+    })
+  })
+  
+  # Make the wordcloud drawing predictable during a session
+  wordcloud_rep <- repeatable(wordcloud)
+  
+  output$plot <- renderPlot({
+    v <- terms()
+    wordcloud_rep(names(v), v, scale=c(4,0.5),
+                  min.freq = input$freq, max.words=input$max,
+                  colors=brewer.pal(8, "Dark2"))
+  })
+}
+
+ui <- 
+shinyUI(fluidPage(
+  # Application title
+  titlePanel("Word Cloud of the 2013 CSO Statement of Strategy Progress Report"),
+  
+  sidebarLayout(
+    # Sidebar with a slider and selection inputs
+    sidebarPanel(
+      selectInput("selection", "Choose the Irish or English version:",
+                  choices = books),
+      actionButton("update", "Aistrigh/Change"),
+      hr(),
+      sliderInput("freq",
+                  "Minimum Frequency:",
+                  min = 1,  max = 50, value = 1),
+      sliderInput("max",
+                  "Maximum Number of Words:",
+                  min = 1,  max = 150,  value = 80),width = 5
+    ),
+    
+    # Show Word Cloud
+    mainPanel(
+      plotOutput("plot",width=400, height=400)
+    ))
+  
+))
+
+shinyApp(ui = ui, server = server)
+```
