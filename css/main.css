@@ -216,7 +216,12 @@ nav > ul > li > div {
 	nav > ul > li > div ul > li:hover > a {
 		background-color: rgba( 255, 255, 255, 0.1);
 	}
-  		
+  	nav > ul > li:hover > div {
+	display: block;
+	opacity: 1;
+	visibility: visible;
+}
+		
 a {
     text-decoration: none;
     color: #999;
