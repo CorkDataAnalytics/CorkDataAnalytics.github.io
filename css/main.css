@@ -169,6 +169,19 @@ nav > ul > li > a > .caret {
 	-o-transition: color 0.1s linear;
 	  transition: color 0.1s linear; 
 }
+
+        nav > ul > li:hover {
+          background-color: rgb( 40, 44, 47 );
+        }
+
+        nav > ul > li:hover > a {
+          color: rgb( 255, 255, 255 );
+        }
+
+        nav > ul > li:hover > a > .caret {
+          border-top-color: rgb( 255, 255, 255 );
+        }
+	
 	
 a {
     text-decoration: none;
