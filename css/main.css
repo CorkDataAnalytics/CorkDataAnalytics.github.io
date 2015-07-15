@@ -10,7 +10,14 @@ The above rule Turns off borders and shadows on the root widget... and adds roun
 .p7TP3-10 .p7TP3cwrapper_10 {border: none;}
 Turns off borders on the content wrapper
 
- 
+ body {
+	background-color: #EBE8E4;
+	color: #222;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: 300;
+	font-size: 15px;
+}
+	
 
 .p7TP3_content_10 {
 background-repeat: no-repeat;
