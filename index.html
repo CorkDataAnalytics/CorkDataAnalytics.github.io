@@ -11,29 +11,106 @@
 <meta charset="utf-8">
 <title>This Cork based website, which is hosted by github, is a platform for data analytics that focuses initially on twitter api and Central Statistics Office data. In some cases the underlying R code is provided which facilitates replication of the analysis. At a later date the code for the Shiny apps will also be made available online. It is planned to broaden the scope of the analytics over time.</title>
 <style class="cp-pen-styles">
-* {
-  margin: 0;
-  padding: 0;
+p7TP3-10 {
+border: none;
+box-shadow: none;
+border-radius: 5px;
 }
+The above rule Turns off borders and shadows on the root widget... and adds rounded corners.
 
-a {
-  color: #333;
-  text-decoration: none;
+ 
+
+.p7TP3-10 .p7TP3cwrapper_10 {border: none;}
+Turns off borders on the content wrapper
+
+ 
+
+.p7TP3_content_10 {
+background-repeat: no-repeat;
+background-position: 50%;
+background-size: cover;
 }
+The above rule sets background attributes for the content panels. Background-size ensures that the images fill the panel completely and background-position centers the images horizontally and vertically.
 
-html {
-  width: 100%;
-  height: 100%;
+ 
+
+#p7TP3c1_1 { background-image: url(art/art-01.jpg); }
+#p7TP3c1_2 { background-image: url(art/art-02.jpg); }
+#p7TP3c1_3 { background-image: url(art/art-03.jpg); }
+The above rules set the background image for the first 3 content panels, using the IDs genrerated by the TPM3 interface.
+
+ 
+
+.p7TP3-10 .p7TP3-10-arrows a {opacity: .75;}
+The above rule makes the previous and next arrows a little darker than normal in their default state.
+
+ 
+
+.p7TP3_vp,
+.p7TP3cwrapper_10,
+.p7TP3_content_10 {
+border-radius: 5px;
+}
+The above rule rounds the corners of the content area.
+
+ 
+
+.blurb {
+max-width: 40%;
+margin: 5% 0px 5% 100px;
+padding: 36px;
+background-color: #222; 
+background: rgba(0,0,0,.6);
+border-radius: 6px;
+color: #DDD;
+}
+The overlay is simulated using max-width and margins. Transparency is set using RGBA colors with a transparency of .6... while background color is set as a fallback for old browsers.
+
+ 
+
+#p7TP3c1_1 .blurb {background-color: rgba(0,0,0,.6);}
+#p7TP3c1_2 .blurb { background-color: rgba(126,39,39,0.75); }
+#p7TP3c1_3 .blurb { background-color: rgba(42,75,90,0.75); }
+We set individual colors for the fly-in Blurb Box for each content panel.
+
+ 
+
+.p7TP3content .blurb {
+position: relative;
+left: -400px;
+opacity: 0;
+-webkit-transform: scale(5) rotate(-45deg);
+transform: scale(5) rotate(-45deg);
+visibility: hidden;
+}
+We stage the Blurb Box animation...scaling 5 times normal size,rotating it 45 degrees, and making it transparent. We also position it off-screen left.
+
+ 
+
+.p7TP3content.current-panel .blurb {
+left: 0px;
+visibility: visible;
+opacity: 1;
+-webkit-transform: scale(1) rotate(0deg);
+transform: scale(1) rotate(0deg);
+-webkit-transition: all 0.5s ease .75s;
+transition: all 0.5s ease .75s;
+}
+We finish the Blurb animation by setting transform transitions for the current panel only. The current-panel class is assigned by the TPM3 script to the panel thart is currently in view.
+
+
+@media only screen and (min-width: 0px) and (max-width: 700px) {
+.blurb {
+max-width: none;
+margin: 3%;
+padding: 20px;
+}
 }
 
 body {
-background-color: #85B4CC; 
-  width: 100%;
-  height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #fff;
+    margin: 60px auto;
+    width: 70%;
 }
-
 h1 {
   width: 100%;
   text-align: center;
@@ -57,13 +134,13 @@ h1 {
   display: block;
   float: left;
   clear: both;
-  height: 10px;
-  width: 50px;
+  height: 3%;
+  width: 60px;
   border-radius: 40px;
-  background-color: #fff;
+  background-color: #DDD;
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: -5px;
+  top: 150px;
   overflow: hidden;
   transition: all 0.4s ease;
 }
