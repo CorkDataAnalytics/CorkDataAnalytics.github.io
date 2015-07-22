@@ -10,7 +10,9 @@
   ga('send', 'pageview');
 </script>
 
-
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
   <head>
     <title>{{ page.title }}</title>
 <meta name="description" content="A website built on R based analysis of Central Statistics Office aswell as Twitter data.">
@@ -47,6 +49,21 @@
 		<footer>
 
 <div id="disqus_thread"></div>
+<script>
+$(document).ready(function() {
+		$(document).delegate('.open', 'click', function(event){
+			$(this).addClass('oppenned');
+			event.stopPropagation();
+		})
+		$(document).delegate('body', 'click', function(event) {
+			$('.open').removeClass('oppenned');
+		})
+		$(document).delegate('.cls', 'click', function(event){
+			$('.open').removeClass('oppenned');
+			event.stopPropagation();
+		});
+	});
+</script>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = 'corkdataanalyticsgithubio';
