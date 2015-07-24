@@ -1,58 +1,46 @@
-
-
 <!doctype html>
 <html>
 <head>
      
 <meta name="DC.Description" content="A website built on R based analysis of Central Statistics Office aswell as Twitter data.">
 <meta name="DC.Keywords" content="Cork, Data, Analytics, Retweets, Sentiment Analysis, Shiny Apps, Word Cloud, Time Series Analysis, CSO data"<meta http-equiv="content-type" content="text/html;charset=UTF-8">
-<meta name=viewport content="width=device-width, initial-scale=1">
+
 
 <meta charset="utf-8">
 <title>This Cork based website, which is hosted by github, is a platform for data analytics that focuses initially on twitter api and Central Statistics Office data. In some cases the underlying R code is provided which facilitates replication of the analysis. At a later date the code for the Shiny apps will also be made available online. It is planned to broaden the scope of the analytics over time.</title>
-
 <style class="cp-pen-styles">
-
-
-
-
+p7TP3-10 {
+border: none;
+box-shadow: none;
+border-radius: 5px;
+}
+The above rule Turns off borders and shadows on the root widget... and adds rounded corners.
  
-
 .p7TP3-10 .p7TP3cwrapper_10 {border: none;}
 Turns off borders on the content wrapper
-
  
-
 .p7TP3_content_10 {
 background-repeat: no-repeat;
 background-position: 50%;
 background-size: cover;
 }
 The above rule sets background attributes for the content panels. Background-size ensures that the images fill the panel completely and background-position centers the images horizontally and vertically.
-
  
-
 #p7TP3c1_1 { background-image: url(art/art-01.jpg); }
 #p7TP3c1_2 { background-image: url(art/art-02.jpg); }
 #p7TP3c1_3 { background-image: url(art/art-03.jpg); }
 The above rules set the background image for the first 3 content panels, using the IDs genrerated by the TPM3 interface.
-
  
-
 .p7TP3-10 .p7TP3-10-arrows a {opacity: .75;}
 The above rule makes the previous and next arrows a little darker than normal in their default state.
-
  
-
 .p7TP3_vp,
 .p7TP3cwrapper_10,
 .p7TP3_content_10 {
 border-radius: 5px;
 }
 The above rule rounds the corners of the content area.
-
  
-
 .blurb {
 max-width: 40%;
 margin: 5% 0px 5% 100px;
@@ -63,16 +51,12 @@ border-radius: 6px;
 color: #DDD;
 }
 The overlay is simulated using max-width and margins. Transparency is set using RGBA colors with a transparency of .6... while background color is set as a fallback for old browsers.
-
  
-
 #p7TP3c1_1 .blurb {background-color: rgba(0,0,0,.6);}
 #p7TP3c1_2 .blurb { background-color: rgba(126,39,39,0.75); }
 #p7TP3c1_3 .blurb { background-color: rgba(42,75,90,0.75); }
 We set individual colors for the fly-in Blurb Box for each content panel.
-
  
-
 .p7TP3content .blurb {
 position: relative;
 left: -400px;
@@ -82,9 +66,7 @@ transform: scale(5) rotate(-45deg);
 visibility: hidden;
 }
 We stage the Blurb Box animation...scaling 5 times normal size,rotating it 45 degrees, and making it transparent. We also position it off-screen left.
-
  
-
 .p7TP3content.current-panel .blurb {
 left: 0px;
 visibility: visible;
@@ -95,16 +77,13 @@ transform: scale(1) rotate(0deg);
 transition: all 0.5s ease .75s;
 }
 We finish the Blurb animation by setting transform transitions for the current panel only. The current-panel class is assigned by the TPM3 script to the panel thart is currently in view.
-
-
-@media only screen and (min-width: 0px) and (max-width: 90%) {
+@media only screen and (min-width: 0px) and (max-width: 700px) {
 .blurb {
 max-width: none;
 margin: 3%;
 padding: 20px;
 }
 }
-
 body {
     margin: 60px auto;
     width: 70%;
@@ -114,7 +93,6 @@ h1 {
   text-align: center;
   padding: 40px 0;
 }
-
 .open {
   position: fixed;
   top: 50%px;
@@ -125,15 +103,13 @@ h1 {
   cursor: pointer;
   transition: opacity 0.2s linear;
 }
-
 .open:hover { opacity: 0.8; }
-
 .open span {
   display: block;
   float: centre;
   clear: both;
   height: %;
-  width: 60%;
+  width: 60px;
   border-radius: 40px;
   background-color: #DDD;
   position: absolute;
@@ -142,16 +118,12 @@ h1 {
   overflow: hidden;
   transition: all 0.4s ease;
 }
-
 .open span:nth-child(1) {
   margin-top: 10px;
   z-index: 9;
 }
-
 .open span:nth-child(2) { margin-top: 25px; }
-
 .open span:nth-child(3) { margin-top: 40px; }
-
 .sub-menu {
   transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   height: 0;
@@ -164,7 +136,6 @@ h1 {
   z-index: 18;
   overflow: hidden;
 }
-
 .sub-menu li {
   display: block;
   float: right;
@@ -173,19 +144,12 @@ h1 {
   margin-right: -160px;
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-
 .sub-menu li:first-child { margin-top: 180px; }
-
 .sub-menu li:nth-child(1) { -webkit-transition-delay: 0.05s; }
-
 .sub-menu li:nth-child(2) { -webkit-transition-delay: 0.10s; }
-
 .sub-menu li:nth-child(3) { -webkit-transition-delay: 0.15s; }
-
 .sub-menu li:nth-child(4) { -webkit-transition-delay: 0.20s; }
-
 .sub-menu li:nth-child(5) { -webkit-transition-delay: 0.25s; }
-
 .sub-menu li a {
   color: #000;
   font-family: 'Lato', Arial, Helvetica, sans-serif;
@@ -195,34 +159,27 @@ h1 {
   float: left;
   line-height: 40px;
 }
-
 .oppenned .sub-menu {
   opacity: 1;
-  height: 80%;
-  width: 60%;
+  height: 800px;
+  width: 800px;
 }
-
 .oppenned span:nth-child(2) { overflow: visible; }
-
 .oppenned span:nth-child(1),
 .oppenned span:nth-child(3) {
   z-index: 100;
   transform: rotate(45deg);
 }
-
 .oppenned span:nth-child(1) { transform: rotate(45deg) translateY(12px) translateX(12px); }
-
 .oppenned span:nth-child(2) {
-  height: 40%px;
-  width: 40%px;
+  height: 400px;
+  width: 400px;
   right: -160px;
   top: -160px;
   border-radius: 50%;
   background-color: #F5F5F5;
 }
-
 .oppenned span:nth-child(3) { transform: rotate(-45deg) translateY(-10px) translateX(10px); }
-
 .oppenned li { margin-right: 168px; }
 nav ul, footer ul {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
@@ -254,17 +211,13 @@ footer {
     border-top: 1px solid #d5d5d5;
     font-size: .8em;
 }
-
 ul.posts { 
     margin: 20px auto 40px; 
     font-size: 1.5em;
 }
-
 ul.posts li {
     list-style: none;
 }
- 
-
 </style>
 </head>
 
