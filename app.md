@@ -1,7 +1,4 @@
----
-runtime: shiny
-output: html_document
----
+
 
 ```{r,message=FALSE,echo=FALSE}
 library("googleVis")
